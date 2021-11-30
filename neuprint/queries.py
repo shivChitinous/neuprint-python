@@ -2210,7 +2210,9 @@ def _fetch_synapse_connections(source_criteria, target_criteria, synapse_criteri
 
         {combined_conditions}
 
-        WITH n, m, ns, ms, e
+        // Note: Semantically, the word 'DISTINCT' is unnecessary here,
+        // but its presence makes this query run 10x faster.
+        WITH DISTINCT n, m, ns, ms, e
         WHERE e.weight >= {min_total_weight}
 
         {source_syn_crit.condition('n', 'm', 'ns', 'ms', prefix=8)}
